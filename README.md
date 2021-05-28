@@ -1,2 +1,3 @@
 # Homework03
-add a module called storesApi.js and move the codes inside it \
+add a new module (i.e. storesApi.js) and move the api codes inside it\ 
+create photos pages (html/js/css)
