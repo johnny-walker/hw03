@@ -4,9 +4,11 @@
 
 const express = require('express')
 const qs = require('querystring')
+const fs = require('fs')
 const multer = require('multer')
 
-const queryStores = require('./storesApi.js')
+const queryStores = require('./src/app/storesApi.js')
+const sqlQuery = require('./src/app/sqliteApi.js')
 
 var app = express()
 
@@ -56,16 +58,25 @@ app.get('/*', function (req, res) {
 
 // HTTP POST method
 // setup multer
-let uploadfile = null
+let record = {
+    no: -1,
+    caption: '',
+    path: ''
+}
 
 let storage = multer.diskStorage({
     destination: function (req, file, callback) {
-        callback(null, __dirname + '/database')
+        let dir =  __dirname + '/database/photos'
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir)
+        }
+        callback(null, dir)
     },
     filename: function (req, file, callback) {
-        console.log(`filename callback: ${file.fieldname}`)
-        uploadfile = file.fieldname + '-' + Date.now()
-        callback(null, uploadfile)
+        let seperators = file.originalname.split('.') 
+        record.no = Date.now()
+        record.path = `${seperators[0]}_${record.no}.${seperators[1]}`
+        callback(null, record.path)
     }
 })
 let upload = multer({ storage: storage })
@@ -74,6 +85,8 @@ let upload = multer({ storage: storage })
 app.post('/photos/upload', upload.any(), function (req, res) {
     if (req.body) {
         res.send('Upload successfully, caption is:' + req.body.caption )
+        record.caption = req.body.caption
+        sqlQuery(record)
     } 
 })
 

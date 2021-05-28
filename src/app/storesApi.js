@@ -25,7 +25,10 @@ const fsPromises = fs.promises
 async function readDatabase() {
     try {
         // STEP 1: 讀取 CSV 檔
-        const inputFile = __dirname + '/database/ntufoods.csv'
+        // __dirname = /Volumes/programming/hw03/src/app, finding domain home by removing '/src/app'
+        let domain_home = __dirname.replace('/src/app', '')
+        const inputFile = domain_home + '/database/ntufoods.csv'
+        
         const input = await fsPromises.readFile(inputFile)
 
         // STEP 2：建立讀出 CSV 用的陣列和 parser
@@ -71,9 +74,21 @@ function filterPlaces(opt) {
     return filterStores.filter(store => store[1] === selection)
 }
 
+function isTypeAccpeted(store, selection) {
+    let res = false
+    const items = store[5].split(' ')
+    for (i=0; i< items.length; i++) {
+      if (items[i] ===  selection) {
+        res = true
+        break
+      }
+    }
+    return res
+  }
+
 function filterTypes(opt) {
   let selection = types_list[parseInt(opt)]
-  return filterStores.filter(store => store[5] === selection)
+  return filterStores.filter(store => isTypeAccpeted(store, selection))
 }
 
 function isBudgetAccpeted(store, selection) {
