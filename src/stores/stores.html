@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="/src/stores/stores.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/src/stores/stores.js"></script>
+</head>
+
+<body onload="bodyLoaded()">
+    <div>
+        <img src="/res/food.png" alt="Food" width="40" height="40">
+        <span>台大校園美食</span>
+    </div>
+
+    <div>
+        <label>選擇條件</label> <button id='queryData'>篩選</button> <br>
+        <label for="places">位置:</label>
+        <select name="places" id="places">
+            <option value="-1">不篩選</option>
+            <option value="0">水源市場到師大分部</option>
+            <option value="1">水源市場到正門</option>
+            <option value="2">正門到台電大樓</option>
+            <option value="3">溫州街</option>
+            <option value="4">辛亥路118巷（後門）</option>
+            <option value="5">台大學餐</option>
+            <option value="6">台科大學餐</option>
+            <option value="7">長興街</option>
+        </select>
+        <label for="types">主食:</label>
+        <select name="types" id="types">
+            <option value="-1">不篩選</option>
+            <option value="0">中式</option>
+            <option value="1">西式</option>
+            <option value="2">台式</option>
+            <option value="3">美式</option>
+            <option value="4">港式</option>
+            <option value="5">韓式</option>
+            <option value="6">日式</option>
+            <option value="7">東南亞料理</option>
+            <option value="8">南洋料理</option>
+            <option value="9">中東料理</option>
+            <option value="10">雲南料理</option>
+        </select>
+        <label for="budgets">預算:</label>
+        <select name="budgets" id="budgets">
+            <option value="-1">不篩選</option>
+            <option value="0">少於100</option>
+            <option value="1">100~200</option>
+            <option value="2">300~500</option>
+            <option value="3">大於500</option>
+        </select>
+    </div> <br>
+
+    <label id="total">符合的店家:</label>
+    <!-- list w/o image
+    <ul id="storesList">
+        <li> store1</li>
+        <li>store2</li>
+    </ul>
+    -->
+
+    <!-- image list item -->
+    <div id="storesList">
+        <div class="imageItemOdd"><img class="image-cropper" src="/res/food.png" width="48" height="36">store1 </div>
+        <div class="imageItem"><img class="image-cropper" src="/res/food.png" width="48" height="36">store2 </div>
+    </div>
+    
+</body>
+
+</html>
