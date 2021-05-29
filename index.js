@@ -106,9 +106,11 @@ app.post('/photos/upload', upload.any(), function (req, res) {
     if (req.body) {
         record.albumid = req.body.albumid
         record.caption = req.body.caption
-        res.send(`Upload successfully: album id is ${req.body.albumid} , caption is ${req.body.caption}`  )
-        //res.sendStatus(200) //ok
+        console.log(`Upload successfully: album id is ${req.body.albumid} , caption is ${req.body.caption}` )
         insertPhoto(record)
+
+        //redirect to album page after upload compeletes
+        res.sendFile(__dirname + '/src/photos/' + 'album.html')
     } 
 })
 

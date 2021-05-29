@@ -75,9 +75,7 @@ function displayPhotos(albumid) {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             let photoinfos = JSON.parse(xmlhttp.responseText)
             console.log(photoinfos)
-
             refreshPhotos(photoinfos)
-            //refreshPageNavigator();
         }
     }
 
@@ -112,5 +110,15 @@ function refreshPhotos(photoinfos) {
         text += '</div>'
     }   
 
-    document.getElementById("imgContainer").innerHTML = text;
+    let imgContainer = document.getElementById("imgContainer")
+    removeAllChildNodes(imgContainer)
+    
+    //add new elements
+    imgContainer.innerHTML = text;
+}
+
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
 }

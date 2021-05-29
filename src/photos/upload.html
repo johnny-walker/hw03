@@ -6,12 +6,12 @@
 
 </head>
 
-<body>
+<body onload="uploadLoaded()"">
     <div> <img src="/res/upload.png" width="40" height="40">
         <span>圖片上傳</span>
     </div>
     <!-- use POST request, because form tag contains method attribute -->
-    <form enctype="multipart/form-data" action="/photos/upload" method="post">
+    <form id="form-upload" enctype="multipart/form-data" action="/photos/upload" method="post">
         <div>
             <input type="file" name="photo" onchange="loadFile(event)"/>
             <div class="form-group">
