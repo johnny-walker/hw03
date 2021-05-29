@@ -1,6 +1,9 @@
-`
+` 
+create album.db under shell (sqlite3 album.db), then create following table
+
 CREATE TABLE Albums (
     ID int,
+    AlbumID int,
     Caption varchar(255),
     Path varchar(255)
 );
@@ -50,6 +53,6 @@ function run(statement) {
 //export function 
 module.exports = function insertPhotos(row) {
     console.log(row)
-    let statement = `insert into albums values(${row.no}, '${row.caption}', '${row.path}');`
+    let statement = `insert into albums values(${row.no}, '${row.albumid}', '${row.caption}', '${row.path}');`
     run(statement)
 }

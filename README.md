@@ -11,7 +11,7 @@ npm install multer <br/>
 create photos/upload pages (html/js/css) <br/>
 add app(backend) code to support http/post <br/>
 upload photo with title by form <br/>
-create SQLite database & table schema(id, caption, path) using sqlite3 on shell<br/>
+create SQLite database & table schema(id, albumid, caption, path) using sqlite3 on shell<br/>
 save uploaded photos in db (SQLite)
 
 ### create Photo Album Page

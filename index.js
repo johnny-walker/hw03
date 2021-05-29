@@ -59,9 +59,10 @@ app.get('/*', function (req, res) {
 // HTTP POST method
 // setup multer
 let record = {
-    no: -1,
-    caption: '',
-    path: ''
+    no: -1,                     // is assigned as Date.now()
+    albumid: '2021-05-29',      // default ate(), but user can change it while submiting photo
+    caption: '',                // given by user
+    path: ''                    // file name saved in backend
 }
 
 let storage = multer.diskStorage({
@@ -70,12 +71,15 @@ let storage = multer.diskStorage({
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir)
         }
+        // invoke next handler    
         callback(null, dir)
     },
+
     filename: function (req, file, callback) {
-        let seperators = file.originalname.split('.') 
         record.no = Date.now()
-        record.path = `${seperators[0]}_${record.no}.${seperators[1]}`
+        let seperators = file.originalname.split('.') 
+        record.path = `${seperators[0]}_${record.no}.${seperators[1]}`  //i.e. 'abc.jpg' as 'abc_67597243572345.jpg"
+        // invoke next handler   
         callback(null, record.path)
     }
 })
@@ -84,8 +88,10 @@ let upload = multer({ storage: storage })
 //passing multer as middleware
 app.post('/photos/upload', upload.any(), function (req, res) {
     if (req.body) {
-        res.send('Upload successfully, caption is:' + req.body.caption )
+        record.albumid = req.body.albumid
         record.caption = req.body.caption
+        res.send(`Upload successfully: album id is ${req.body.albumid} , caption is ${req.body.caption}`  )
+        //res.sendStatus(200) //ok
         sqlQuery(record)
     } 
 })
