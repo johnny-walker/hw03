@@ -1,8 +1,8 @@
 <html>
 
 <head>
-    <link href="/src/photos/photos.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="/src/photos/photos.js"></script>
+    <link href="/src/photos/upload.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/src/photos/upload.js"></script>
 
 </head>
 
@@ -11,14 +11,14 @@
         <span>圖片上傳</span>
     </div>
     <!-- use POST request, because form tag contains method attribute -->
-    <form enctype="multipart/form-data" action="http://localhost:5000/photos/upload" method="post">
+    <form enctype="multipart/form-data" action="/photos/upload" method="post">
         <div>
             <input type="file" name="photo" onchange="loadFile(event)"/>
             <div class="form-group">
                 <label> 相片集編號 </label> <br>
                 <textarea name="albumid" id="albumid" rows="1" cols="8"></textarea> <br>
                 <label> 相片簡介 </label> <br>
-                <textarea name="caption" rows="1" cols="50"></textarea>
+                <textarea name="caption" rows="1" cols="20"></textarea>
             </div>
             <input type="submit" value="上傳"/> <br>
             <img id="imgsrc" > <br>

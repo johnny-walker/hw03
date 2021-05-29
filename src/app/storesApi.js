@@ -109,7 +109,7 @@ function filterBudgets(opt) {
 }
 
 //export function to query stores 
-module.exports = function queryStores(opts) {
+exports.queryStores = function queryStores(opts) {
 
     filterStores = [...allStores]
 

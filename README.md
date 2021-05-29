@@ -17,6 +17,7 @@ create SQLite3 database & table schema(id, albumid, caption, path) using sqlite3
 save uploaded photos in db (SQLite)
 
 ### create Photo Album Page
-create photos album pages (html, share same js/css) <br/>
-query uploaded photos from db (SQLite3) <br/>
+create photos album pages (html/js/css) <br/>
+query uploaded albumid/photos from db (SQLite3) <br/>
+display photo album <br/>
 

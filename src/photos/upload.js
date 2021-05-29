@@ -1,10 +1,7 @@
-const heroku = false
-const PHOTO_ALBUM_URL = heroku ? 'https://ntu-food.herokuapp.com/photos/album' : 'http://localhost:5000/photos/album'
-
 var loadFile = function(event) {
 	document.getElementById('imgsrc').src = URL.createObjectURL(event.target.files[0])
 	
-	// create default album-id from Date as yy-mm-dd
+	// create default album-id from Date as 'yy-mm-dd'
 	const now = new Date()
 	let yy = now.getFullYear() % 100
 	let mm = now.getMonth()
@@ -16,6 +13,10 @@ var loadFile = function(event) {
 	document.getElementById('albumid').value = yy.toString() + '-' + mm.toString() + '-' + dd.toString()
 }
 
+/*
+const heroku = false
+const PHOTO_ALBUM_URL = heroku ? 'https://ntu-food.herokuapp.com/photos/album' : 'http://localhost:5000/photos/album'
 var uploadFile = function() {
     window.location.href = PHOTO_ALBUM_URL
 }
+*/

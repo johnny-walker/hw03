@@ -7,13 +7,19 @@ const qs = require('querystring')
 const fs = require('fs')
 const multer = require('multer')
 
-const queryStores = require('./src/app/storesApi.js')
-const sqlQuery = require('./src/app/sqliteApi.js')
+const {queryStores} = require('./src/app/storesApi.js') 
+const {insertPhoto, queryAlbumIds} = require('./src/app/photosApi.js')
+
+// get exproted functions
+//const queryStores = storesApi.queryStores
+//const insertPhoto = photosApi.insertPhoto
+//const queryAlbumIds = photosApi.queryAlbumIds
 
 var app = express()
 
 // HTTP GET method
-// the __dirname is the current directory from where the script is running
+// the __dirname is the location of index.js
+// get web pages 
 app.get('/', function (req, res) {
     console.log(req.url)
     res.sendFile(__dirname + '/' + 'index.html')
@@ -39,6 +45,7 @@ app.get('/photos/album', function (req, res) {
     res.sendFile(__dirname + '/src/photos/' + 'album.html')
 })
 
+// web pages' GET api
 // curl -X GET "http://localhost:5000/stores/api?place=2&type=2&budget=0"
 app.get("/stores/api", (req, res, next) => {
     console.log(req.url)
@@ -50,13 +57,22 @@ app.get("/stores/api", (req, res, next) => {
         console.error(e)
     }
 })
-
-app.get('/*', function (req, res) {
-    console.log(req.url);
-    res.sendFile(__dirname + '/' + req.url)
+// curl -X GET "http://localhost:5000/photos/album/api?albumid=all"
+app.get('/photos/album/api', function (req, res) {
+    console.log(req.url)
+    try {
+        const querystr = req.url.replace('/photos/album/api?', '')
+        const opts = qs.parse(querystr)
+        queryAlbumIds(opts, (response) => {
+            console.log(response)
+            res.json(response)
+        })
+    } catch (e) {
+        console.error(e)
+    }
 })
 
-// HTTP POST method
+// HTTP POST method for photos
 // setup multer
 let record = {
     no: -1,                     // is assigned as Date.now()
@@ -92,9 +108,16 @@ app.post('/photos/upload', upload.any(), function (req, res) {
         record.caption = req.body.caption
         res.send(`Upload successfully: album id is ${req.body.albumid} , caption is ${req.body.caption}`  )
         //res.sendStatus(200) //ok
-        sqlQuery(record)
+        insertPhoto(record)
     } 
 })
+
+// any other get requests (files)
+app.get('/*', function (req, res) {
+    console.log(req.url);
+    res.sendFile(__dirname + '/' + req.url)
+})
+
 
 let server = app.listen(5000, function () {
     console.log('Node server is running..')

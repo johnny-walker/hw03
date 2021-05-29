@@ -6,7 +6,7 @@ let options = {
 }
 
 function bodyLoaded() {
-    console.log("bodyLoaded");
+    console.log("Stores page body loaded")
     document.getElementById('queryData').onclick = function () {
         let storesList = document.getElementById('storesList')
 
@@ -69,8 +69,8 @@ function bodyLoaded() {
         parent.appendChild(div)
  
         // set attrtibutes
-        div.class = even ? "imageItem" : "imageItemOdd"
-        image.class = "image-cropper"
+        div.className = even ? "imageItem" : "imageItemOdd"
+        image.className = "image-cropper"
         image.src = imagePath
         image.width = 48
         image.height = 36
@@ -78,11 +78,9 @@ function bodyLoaded() {
    
         div.onclick = function (e) {
             // todo, show detail page
-            let target = e.target.getElementById("imageItem")
-            if (!target) {
-                target = e.target.getElementById("imageItemOdd")
-            }
+            let target = e.target
             console.log(target.innerText)
+            window.location.href = '/'
         }
     }
 
@@ -98,26 +96,31 @@ function bodyLoaded() {
     }
 }
 
-const heroku = false
-const API_STORES_URL = heroku ? 'https://ntu-food.herokuapp.com/stores/api' : 'http://localhost:5000/stores/api'
+const API_STORES_URL ='/stores/api'
 
 function queryNTUStores(props, callback) {
-    let queryString = `?place=${props.place}&type=${props.type}&budget=${props.budget}`
-    let url = API_STORES_URL + queryString
-    //let url = "http://localhost:5000/stores/api?place=1&type=2&budget=0"
-
     let xmlhttp = new XMLHttpRequest()
-    let method = 'GET'
-
-    xmlhttp.open(method, url)
     xmlhttp.onerror = () => {
-        console.log("** An error occurred during the transaction")
+        console.log("** An error occurred during queryNTUStores")
     }
     xmlhttp.onreadystatechange = () => {
+        //   (readyState)
+        // 0 UNSENT:	客戶端已被建立，但 open() 方法尚未被呼叫。
+        // 1 OPENED:	open() 方法已被呼叫。
+        // 2 HEADERS_RECEIVED: send() 方法已被呼叫，而且可取得 header 與狀態。
+        // 3 LOADING: 回應資料下載中，此時 responseText 會擁有部分資料。
+        // 4 DONE
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             // response are characters data type, convert to json by JSON.parse
             callback(JSON.parse(xmlhttp.responseText))
         }
     }
+
+    let queryString = `?place=${props.place}&type=${props.type}&budget=${props.budget}`
+    let url = API_STORES_URL + queryString
+    //let url = "/stores/api?place=1&type=2&budget=0"
+    
+    let method = 'GET'
+    xmlhttp.open(method, url)
     xmlhttp.send()
 }

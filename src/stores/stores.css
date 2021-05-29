@@ -62,3 +62,20 @@
   ul li:hover, .imageItem:hover, .imageItemOdd:hover {
     background: #ddd;
   }
+
+  .listitem-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .listitem-description {
+    order: 2;
+    color: #3caeff;
+    font-size: 12px;
+  }
+  
+  .listitem-subtitle {
+    order: 3;
+    color: black!important;
+    font-size: 15px;
+  }
