@@ -9,7 +9,7 @@ https://www.w3schools.com/sql/sql_intro.asp <br/>
 ### create Photo Upload Page
 npm install multer <br/>
 create photos/upload pages (html/js/css) <br/>
-add app(backend) code to support (HTTP POST) <br/>
+update app(backend) code to support (HTTP POST) <br/>
 upload photo with albumid/title by form (HTTP POST) <br/>
 
 ### save upload data in database
@@ -19,5 +19,6 @@ save uploaded photos in db (SQLite)
 ### create Photo Album Page
 create photos album pages (html/js/css) <br/>
 query uploaded albumid/photos from db (SQLite3) <br/>
+update app(backend) code to support (HTTP GET) <br/>
 display photo album <br/>
 

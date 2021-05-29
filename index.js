@@ -121,7 +121,7 @@ app.get('/*', function (req, res) {
 })
 
 
-let server = app.listen(5000, function () {
+const server = app.listen(5000, function () {
     console.log('Node server is running..')
 })
 
