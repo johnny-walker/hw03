@@ -94,8 +94,8 @@ function refreshPhotos(photoinfos) {
             text += '<div class="row">'
         }
         text += '<div class="column">'
-        text += '<a target="_blank" href="/database/photos/' + photoinfos[i].Path + '">'
-        text += '<img class="imgsrc" src="/database/photos/' +  photoinfos[i].Path + '">'
+        text += '<a target="_blank" href="' + photoinfos[i].Path + '">'
+        text += '<img class="imgsrc" src="' +  photoinfos[i].Path + '">'
         text += '</a>'
         text += '<div class="caption">' + photoinfos[i].Caption + '</div>'
         text += '</div>'

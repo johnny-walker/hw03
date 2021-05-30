@@ -9,7 +9,7 @@ var loadFile = function (event) {
     // create default album-id from Date as 'yy-mm-dd'
     const now = new Date()
     let yy = now.getFullYear() % 100
-    let mm = now.getMonth()
+    let mm = now.getMonth() + 1
     let dd = now.getDate()
 
     mm = mm < 10 ? '0' + mm.toString() : mm.toString()	// fill 0

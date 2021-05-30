@@ -1,11 +1,13 @@
-` create album.db under shell (sqlite3 album.db), then create following table
+// https://discuss.codecademy.com/t/why-use-db-each-instead-db-all-or-db-get-in-node-sqlite/381382
+/* create album.db under shell (sqlite3 album.db), then create following table
 CREATE TABLE Albums (
     ID int,
     AlbumID int,
     Caption varchar(255),
     Path varchar(255)
 );
-`
+*/
+
 var sqlite3 = require('sqlite3').verbose()
 let db = null
 let dbRecord = 0
@@ -58,6 +60,7 @@ function run_select(sql, callback) {
         } else {
             for (let i=0; i<rows.length; i++) {
                 //console.log(rows[i])
+                rows[i].Path = '/database/photos/' + rows[i].Path
                 response.push(rows[i])
             }
             callback(response)

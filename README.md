@@ -7,7 +7,7 @@ learning SQL (relational database) <br/>
 https://www.w3schools.com/sql/sql_intro.asp <br/>
 CREATE TABLE Albums (
     ID int,
-    AlbumID int,
+    AlbumID varchar(8),
     Caption varchar(255),
     Path varchar(255)
 );
@@ -28,4 +28,5 @@ create photos album pages (html/js/css) <br/>
 query uploaded albumid/photos from db (SQLite3) <br/>
 update app(backend) code to support (HTTP GET) <br/>
 display photo album <br/>
+https://www.w3schools.com/howto/howto_css_images_side_by_side.asp <br/>
 
