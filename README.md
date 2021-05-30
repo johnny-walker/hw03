@@ -5,6 +5,12 @@ add a new module (i.e. storesApi.js) and move the api codes inside it <br/>
 ### SQL database (SQLite3)
 learning SQL (relational database) <br/>
 https://www.w3schools.com/sql/sql_intro.asp <br/>
+CREATE TABLE Albums (
+    ID int,
+    AlbumID int,
+    Caption varchar(255),
+    Path varchar(255)
+);
 
 ### create Photo Upload Page
 npm install multer <br/>

@@ -1,6 +1,4 @@
-` 
-create album.db under shell (sqlite3 album.db), then create following table
-
+` create album.db under shell (sqlite3 album.db), then create following table
 CREATE TABLE Albums (
     ID int,
     AlbumID int,

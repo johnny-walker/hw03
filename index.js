@@ -10,16 +10,14 @@ const multer = require('multer')
 const {queryStores} = require('./src/app/storesApi.js') 
 const {insertPhoto, queryAlbumIds} = require('./src/app/photosApi.js')
 
-// get exproted functions
-//const queryStores = storesApi.queryStores
-//const insertPhoto = photosApi.insertPhoto
-//const queryAlbumIds = photosApi.queryAlbumIds
-
 var app = express()
 
+// ---------------------------------------------------
 // HTTP GET method
-// the __dirname is the location of index.js
 // get web pages 
+// ---------------------------------------------------
+// the __dirname is the location of index.js
+
 app.get('/', function (req, res) {
     console.log(req.url)
     res.sendFile(__dirname + '/' + 'index.html')
@@ -72,11 +70,19 @@ app.get('/photos/album/api', function (req, res) {
     }
 })
 
-// HTTP POST method for photos
-// setup multer
+// any other get requests (files)
+app.get('/*', function (req, res) {
+    console.log(req.url);
+    res.sendFile(__dirname + '/' + req.url)
+})
+
+// ---------------------------------------------------
+// HTTP POST method
+// setup multer for photo uploading
+// ---------------------------------------------------
 let record = {
     no: -1,                     // is assigned as Date.now()
-    albumid: '2021-05-29',      // default ate(), but user can change it while submiting photo
+    albumid: '2021-05-29',      // default current date, but user can change it while submiting photo
     caption: '',                // given by user
     path: ''                    // file name saved in backend
 }
@@ -114,13 +120,7 @@ app.post('/photos/upload', upload.any(), function (req, res) {
     } 
 })
 
-// any other get requests (files)
-app.get('/*', function (req, res) {
-    console.log(req.url);
-    res.sendFile(__dirname + '/' + req.url)
-})
-
-
+// listen specific PORT
 const server = app.listen(5000, function () {
     console.log('Node server is running..')
 })
