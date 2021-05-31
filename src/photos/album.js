@@ -3,13 +3,19 @@ let selectedIndex = -1
 
 function albumLoaded() {
     console.log("Album page body loaded")
-    queryAlbumIDs( () => {
+    queryAlbumIDs(() => {
         if (selectedIndex >= 0) {
             // query and show all photos
             var selAlbum = document.getElementById("select_albumid");
-            setTimeout(displayPhotos(selAlbum.options[selectedIndex].text), 1000);
-            //displayPhotos(selAlbum.options[selectedIndex].text)
+            setTimeout(displayPhotos(selAlbum.options[selectedIndex].text), 100)
         }
+    })
+
+    // listen selAlbum event
+    var selAlbum = document.getElementById("select_albumid")
+    selAlbum.addEventListener("change", function () {
+        selectedIndex = selAlbum.selectedIndex
+        displayPhotos(selAlbum.options[selectedIndex].text)
     })
 }
 
@@ -28,8 +34,8 @@ function queryAlbumIDs(callback) {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             let albumids = []
             let rows = JSON.parse(xmlhttp.responseText)
-            for (let i=0; i<rows.length; i++ ) {
-                if ( !albumids.includes(rows[i].AlbumID) ){
+            for (let i = 0; i < rows.length; i++) {
+                if (!albumids.includes(rows[i].AlbumID)) {
                     albumids.push(rows[i].AlbumID)
                 }
             }
@@ -39,28 +45,19 @@ function queryAlbumIDs(callback) {
             if (albumids.length > 0) {
                 let text = ""
                 for (let i = 0; i < albumids.length; i++) {
-                    text += "<option value='" +  albumids[i] + "'>" + albumids[i] + "</option>"
+                    text += "<option value='" + albumids[i] + "'>" + albumids[i] + "</option>"
                 }
-    
+
                 // update album page selection
-                var selAlbum = document.getElementById("select_albumid");
-                if (selAlbum != null){
-                    selAlbum.innerHTML = text;
-    
-                    // listen selAlbum event
-                    selAlbum.addEventListener("change", function() {
-                        //clearData()
-                        displayPhotos(selAlbum.options[selAlbum.selectedIndex].text);
-                        selectedIndex = selAlbum.selectedIndex;
-                    });   
-                }
+                var selAlbum = document.getElementById("select_albumid")
+                selAlbum.innerHTML = text
                 selectedIndex = 0   // set current selection as first option             
             }
             callback()  // notify completed
         }
     }
 
-    const queryAPI = "/photos/album/api?albumid=all&column=AlbumID"
+    const queryAPI = "/photos/album/api?column=AlbumID"
     const method = 'GET'
     xmlhttp.open(method, queryAPI)
     xmlhttp.send()
@@ -88,31 +85,31 @@ function displayPhotos(albumid) {
 function refreshPhotos(photoinfos) {
     console.log(photoinfos)
     let text = ""
-    let i=0
-    for (i = 0; i < photoinfos.length; i++) { 
-        if (i%5 === 0 ) {
+    let i = 0
+    for (i = 0; i < photoinfos.length; i++) {
+        if (i % 5 === 0) {
             text += '<div class="row">'
         }
         text += '<div class="column">'
         text += '<a target="_blank" href="' + photoinfos[i].Path + '">'
-        text += '<img class="imgsrc" src="' +  photoinfos[i].Path + '">'
+        text += '<img class="imgsrc" src="' + photoinfos[i].Path + '">'
         text += '</a>'
         text += '<div class="caption">' + photoinfos[i].Caption + '</div>'
         text += '</div>'
 
-        if (i%5 === 4 ) {
+        if (i % 5 === 4) {
             text += '</div>'
         }
-    }  
-    
+    }
+
     // if not yet add the close tag, add it
-    if (i%5 != 4 ) {
+    if (i % 5 != 4) {
         text += '</div>'
-    }   
+    }
 
     let imgContainer = document.getElementById("imgContainer")
     removeAllChildNodes(imgContainer)
-    
+
     //add new elements
     imgContainer.innerHTML = text;
 }

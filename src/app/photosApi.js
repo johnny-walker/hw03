@@ -2,7 +2,7 @@
 /* create album.db under shell (sqlite3 album.db), then create following table
 CREATE TABLE Albums (
     ID int,
-    AlbumID int,
+    AlbumID varchar(8),
     Caption varchar(255),
     Path varchar(255)
 );
@@ -63,8 +63,8 @@ function run_select(sql, callback) {
                 rows[i].Path = '/database/photos/' + rows[i].Path
                 response.push(rows[i])
             }
-            callback(response)
         }
+        callback(response)
         closeDB()
     })
 }
@@ -83,11 +83,11 @@ exports.queryAlbumIds = function queryAlbumIds(opts, callback) {
         statement = `SELECT ${opts.column} FROM Albums`
     } 
 
-    if (opts.albumid === 'all') {
-        statement += ' ORDER BY AlbumID;'
-    } else {
-        statement += ` WHERE AlbumID = '${opts.albumid}' ORDER BY AlbumID;`
+    if (opts.albumid) {
+        statement += ` WHERE AlbumID = '${opts.albumid}'`
     }
+    statement += ' ORDER BY AlbumID;'
+
     console.log(statement)
     run_select(statement, (response) => {
         callback(response)
