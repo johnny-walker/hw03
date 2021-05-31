@@ -79,3 +79,16 @@
     color: black!important;
     font-size: 15px;
   }
+
+ /* floats*/
+ .column {
+    float: left;
+    padding: 5px;
+  } 
+
+  /* Clearfix (clear floats) */
+  .imageItem::after,  .imageItemOdd::after {
+    content: "";
+    clear: both;
+    display: table;
+  }

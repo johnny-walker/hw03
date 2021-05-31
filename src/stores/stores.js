@@ -11,7 +11,7 @@ function bodyLoaded() {
         let storesList = document.getElementById('storesList')
 
         removeAllChildNodes(storesList)
-       
+
         getOptionValues()
         queryNTUStores(options, function (queryStores) {
             let element = document.getElementById("total")
@@ -22,10 +22,8 @@ function bodyLoaded() {
                 //console.log(queryStores[i][0])
                 //addChildNode(storesList, queryStores[i][0])
 
-                let name = queryStores[i][0]
-                let imgSrc = "/res/foods/" +  queryStores[i][12]
-                addChildImageNode(storesList, name, imgSrc, (i%2) )
-
+                let imgSrc = "/res/foods/" + queryStores[i][12]
+                addChildImageNode(storesList, queryStores[i][0], queryStores[i][2], imgSrc, (i % 2))
             }
         })
     }
@@ -47,7 +45,7 @@ function bodyLoaded() {
         let text = document.createTextNode(value)
         li.appendChild(text)
         parent.appendChild(li)
-   
+
         li.onclick = function (e) {
             // todo, show detail page
             console.log(e.target.innerText)
@@ -55,28 +53,50 @@ function bodyLoaded() {
     }
 
     /* tags(div img) examples:
-    <div id="storesList">
-        <div class="imageItemOdd"><img src="/res/food.png" width="48" height="36">store1 </div>
-        <div class="imageItem"><img src="/res/food.png" width="48" height="36">store2 </div>
+    <div1 class="imageItemOdd" >
+        <div2 class="column"><img class="image-cropper" src="/res/food.png" width="46" height="46"> </div>
+        <div3 class="column">
+            <div4>store</div>
+            <div5>location</div>
+        </div>
+    </div>
+    <div1 class="imageItem">
+        <div2 class="column"><img class="image-cropper" src="/res/food.png" width="46" height="46"> </div>
+        <div3 class="column">
+            <div4>store</div>
+            <div5">location</div>
+        </div>
     </div>
     */
-    function addChildImageNode(parent, value, imagePath, even) {
-        let div = document.createElement("div")
+    function addChildImageNode(parent, store, location, imagePath, even) {
+        let div1 = document.createElement("div")
+        let div2 = document.createElement("div")
+        let div3 = document.createElement("div")
+        let div4 = document.createElement("div")
+        let div5 = document.createElement("div")
         let image = document.createElement("img")
-        let text = document.createTextNode(value)
-        div.appendChild(image)
-        div.appendChild(text)
-        parent.appendChild(div)
- 
+
+        let text1 = document.createTextNode(store)
+        let text2 = document.createTextNode(location)
+        parent.appendChild(div1)
+        div1.appendChild(div2)
+        div1.appendChild(div3)
+        div2.appendChild(image)
+        div3.appendChild(div4)
+        div3.appendChild(div5)
+        div4.appendChild(text1)
+        div5.appendChild(text2)
+
         // set attrtibutes
-        div.className = even ? "imageItem" : "imageItemOdd"
+        div1.className = even ? "imageItem" : "imageItemOdd"
+        div2.className = "column"
+        div3.className = "column"
         image.className = "image-cropper"
         image.src = imagePath
         image.width = 48
-        image.height = 36
- 
-   
-        div.onclick = function (e) {
+        image.height = 48
+
+        div1.onclick = function (e) {
             // todo, show detail page
             let target = e.target
             console.log(target.innerText)
@@ -96,7 +116,7 @@ function bodyLoaded() {
     }
 }
 
-const API_STORES_URL ='/stores/api'
+const API_STORES_URL = '/stores/api'
 
 function queryNTUStores(props, callback) {
     let xmlhttp = new XMLHttpRequest()
@@ -119,7 +139,7 @@ function queryNTUStores(props, callback) {
     let queryString = `?place=${props.place}&type=${props.type}&budget=${props.budget}`
     let url = API_STORES_URL + queryString
     //let url = "/stores/api?place=1&type=2&budget=0"
-    
+
     let method = 'GET'
     xmlhttp.open(method, url)
     xmlhttp.send()
